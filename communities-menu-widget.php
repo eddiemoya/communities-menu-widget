@@ -36,7 +36,7 @@ class Communities_Menu_Widget extends WP_Widget {
      * 
      * @var string [OPTIONAL]
      */
-    private $classname = 'communtieis-menu-widget';
+    private $classname = 'communinties-menu-widget';
     
     /**
      * Be careful to consider PHP versions. If running PHP4 class name as the contructor instead.
