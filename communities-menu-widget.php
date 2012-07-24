@@ -102,21 +102,21 @@ class Communities_Menu_Widget extends WP_Widget {
 			'fallback_cb' => '', 
 			'menu' => $nav_menu 
 			) );
-
-		
+		$id = (get_queried_object()->parent != 0) ? get_queried_object()->parent : get_queried_object()->term_id;
 		$cats = get_categories(array(
-			'child_of'=> get_queried_object()->term_id,
-
+			'child_of'=> $id,
 		));
-		echo '<div class="subcat-selector-container">';
-		echo '<select id="subcat-selector">';
+		
+		if (sizeof($cats) >= 1) {
+		   	echo '<div class="subcat-selector-container">';
+    		echo 'View <select id="subcat-selector">';
 
-		foreach($cats as $cat){
-			echo '<option value="'.get_category_link($cat->term_id).'">'.$cat->cat_name.'</option>';
+    		foreach($cats as $cat){
+    			echo '<option value="'.get_category_link($cat->term_id).'">'.$cat->cat_name.'</option>';
+    		}
+    		echo '</select>';
+    		echo '</div>';
 		}
-		echo '</select>';
-		echo '</div>';
-
 		//print_pre($cats);
 
 
