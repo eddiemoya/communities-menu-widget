@@ -89,11 +89,16 @@ class Communities_Menu_Widget extends WP_Widget {
 			return;
 
 		$instance['title'] = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base );
+        $instance['sub-title'] = apply_filters( 'widget_title', empty( $instance['sub-title'] ) ? '' : $instance['sub-title'], $instance, $this->id_base );
+
 		//print_pre($args);
 		echo $args['before_widget'];
 
 		if ( !empty($instance['title']) )
-			echo $args['before_title'] . $instance['title'] . $args['after_title'];
+			echo $args['before_title'] . $instance['title'];
+            echo "<h4>".$instance['sub-title']."</h4>";
+            echo $args['after_title'];
+
 
 		echo '<section class="content-body clearfix">';
 
@@ -194,6 +199,7 @@ class Communities_Menu_Widget extends WP_Widget {
 
 
         $title = isset( $instance['title'] ) ? $instance['title'] : '';
+        $subtitle = isset( $instance['sub-title'] ) ? $instance['sub-title'] : '';
 		$nav_menu = isset( $instance['nav_menu'] ) ? $instance['nav_menu'] : '';
 
 		// Get menus
@@ -207,6 +213,7 @@ class Communities_Menu_Widget extends WP_Widget {
 
         /* Examples of input fields one at a time. */
         $this->form_field('title', 'text', 'Title', $instance);
+        $this->form_field('sub-title', 'text', 'Sub Title', $instance);
         ?>
         <p>
 			<label for="<?php echo $this->get_field_id('nav_menu'); ?>"><?php _e('Select Menu:'); ?></label>
