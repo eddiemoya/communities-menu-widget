@@ -107,21 +107,26 @@ class Communities_Menu_Widget extends WP_Widget {
 			'fallback_cb' => '', 
 			'menu' => $nav_menu 
 			) );
-		$id = (get_queried_object()->parent != 0) ? get_queried_object()->parent : get_queried_object()->term_id;
-		$cats = get_categories(array(
-			'child_of'=> $id,
-		));
+        
+        if(is_object(get_queried_object()) && (isset(get_queried_object()->term_id) || isset(get_queried_object()->term_id) ) ){
+		  $id = (isset(get_queried_object()->parent) && get_queried_object()->parent != 0) ? get_queried_object()->parent : get_queried_object()->term_id;
 		
-		if (sizeof($cats) >= 1) {
-		   	echo '<div class="subcat-selector-container">';
-    		echo 'View <select id="subcat-selector">';
 
-    		foreach($cats as $cat){
-    			echo '<option value="'.get_category_link($cat->term_id).'">'.$cat->cat_name.'</option>';
+            $cats = get_categories(array(
+    			'child_of'=> $id,
+    		));
+    		
+    		if (sizeof($cats) >= 1) {
+    		   	echo '<div class="subcat-selector-container">';
+        		echo 'View <select id="subcat-selector">';
+
+        		foreach($cats as $cat){
+        			echo '<option value="'.get_category_link($cat->term_id).'">'.$cat->cat_name.'</option>';
+        		}
+        		echo '</select>';
+        		echo '</div>';
     		}
-    		echo '</select>';
-    		echo '</div>';
-		}
+        }
 		//print_pre($cats);
 
 
@@ -246,7 +251,8 @@ class Communities_Menu_Widget extends WP_Widget {
     private function form_fields($fields, $instance){
         foreach($fields as &$field){
             extract($field);
-            
+            $label = (!isset($label)) ? null : $label;
+            $options = (!isset($options)) ? null : $options;
             $this->form_field($field_id, $type, $label, $instance, $options);
         }
     }
@@ -271,13 +277,13 @@ class Communities_Menu_Widget extends WP_Widget {
     private function form_field($field_id, $type, $label, $instance, $options = array()){
   
         ?><p><?php
-        
+        $input_value = (isset($instance[$field_id])) ? $instance[$field_id] : '';
         switch ($type){
             
             case 'text': ?>
             
                     <label for="<?php echo $this->get_field_id( $field_id ); ?>"><?php echo $label; ?>: </label>
-                    <input id="<?php echo $this->get_field_id( $field_id ); ?>" style="<?php echo $style; ?>" class="widefat" name="<?php echo $this->get_field_name( $field_id ); ?>" value="<?php echo $instance[$field_id]; ?>" />
+                    <input id="<?php echo $this->get_field_id( $field_id ); ?>" style="<?php echo (isset($style)) ? $style : ''; ?>" class="widefat" name="<?php echo $this->get_field_name( $field_id ); ?>" value="<?php echo $input_value; ?>" />
                 <?php break;
             
             case 'select': ?>
@@ -286,7 +292,7 @@ class Communities_Menu_Widget extends WP_Widget {
                         <?php
                             foreach ( $options as $value => $label ) :  ?>
                         
-                                <option value="<?php echo $value; ?>" <?php selected($value, $instance[$field_id]) ?>>
+                                <option value="<?php echo $value; ?>" <?php selected($value, $input_value) ?>>
                                     <?php echo $label ?>
                                 </option><?php
                                 
@@ -303,7 +309,7 @@ class Communities_Menu_Widget extends WP_Widget {
                 
                 ?>
                     <label for="<?php echo $this->get_field_id( $field_id ); ?>"><?php echo $label; ?>: </label>
-                    <textarea class="widefat" rows="<?php echo $rows; ?>" cols="<?php echo $cols; ?>" id="<?php echo $this->get_field_id($field_id); ?>" name="<?php echo $this->get_field_name($field_id); ?>"><?php echo $instance[$field_id]; ?></textarea>
+                    <textarea class="widefat" rows="<?php echo $rows; ?>" cols="<?php echo $cols; ?>" id="<?php echo $this->get_field_id($field_id); ?>" name="<?php echo $this->get_field_name($field_id); ?>"><?php echo $input_value; ?></textarea>
                 <?php break;
             
             case 'radio' :
