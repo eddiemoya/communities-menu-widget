@@ -82,6 +82,8 @@ class Communities_Menu_Widget extends WP_Widget {
      * @return void 
      */
     public function widget( $args, $instance ){
+        global $wp_query;
+        echo "WTF";
 		// Get menu
 		$nav_menu = ! empty( $instance['nav_menu'] ) ? wp_get_nav_menu_object( $instance['nav_menu'] ) : false;
 
@@ -111,10 +113,17 @@ class Communities_Menu_Widget extends WP_Widget {
         if(is_object(get_queried_object()) && (isset(get_queried_object()->term_id) || isset(get_queried_object()->term_id) ) ){
 		  $id = (isset(get_queried_object()->parent) && get_queried_object()->parent != 0) ? get_queried_object()->parent : get_queried_object()->term_id;
 		
+            $cat_args = array('child_of'=> $id);
+            $post_type = get_query_var('post_type');
+            $post_type = (is_array($post_type)) ? $post_type[0] : $post_type;
 
-            $cats = get_categories(array(
-    			'child_of'=> $id,
-    		));
+
+            echo "<pre>";print_r($post_type);echo "</pre>";
+            $cats = (empty($post_type)) ?
+                get_categories($cat_args):
+                get_terms_by_post_type('category', $post_type, $cat_args);
+                
+
     		
     		if (sizeof($cats) >= 1) {
     		   	echo '<div class="subcat-selector-container">';
