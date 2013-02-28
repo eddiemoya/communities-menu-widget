@@ -91,14 +91,20 @@ class Communities_Menu_Widget extends WP_Widget {
 		$instance['title'] = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base );
         $instance['sub-title'] = apply_filters( 'widget_title', empty( $instance['sub-title'] ) ? '' : $instance['sub-title'], $instance, $this->id_base );
 
-		//print_pre($args);
 		echo $args['before_widget'];
 
 		if ( !empty($instance['title']) )
-			echo $args['before_title'] . $instance['title'];
-            echo "<h4>".$instance['sub-title']."</h4>";
-            echo $args['after_title'];
-
+		{
+			echo $args['before_title'];
+			echo "<h3>{$instance['title']}</h3>";
+			
+			if(!empty($instance['sub-title']))
+			{
+				echo "<h4>{$instance['sub-title']}</h4>";
+			}
+			
+			echo $args['after_title'];
+		}
 
 		echo '<section class="content-body clearfix">';
 
