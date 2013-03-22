@@ -110,7 +110,7 @@ class Communities_Menu_Widget extends WP_Widget {
         $gol = ($instance['menu_layout'] == "grid") ? "grid" : "list";
 
 		wp_nav_menu( array( 
-			'container_class'      => 'subnav-items image-' . $gol . '-style', 
+			'container_class'      => 'subnav-items image-' . $instance['menu_layout'] . '-style', 
 			'fallback_cb' => '', 
 			'menu' => $nav_menu,
             'walker' => new Walker_Nav_Menu_Image()
@@ -251,9 +251,9 @@ class Communities_Menu_Widget extends WP_Widget {
                 'type' => 'select',
                 'label' => 'Menu Layout',
                 'options' => array( 
-                    'standard' => 'Standard (default)',
+                    'standard' => 'List (default)',
                     'grid' => 'Grid',
-                    //'subnav' => 'Sub-navigation'
+                    'subnav' => 'Sub-Navigation'
                 )
             ),
 
