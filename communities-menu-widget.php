@@ -251,7 +251,7 @@ class Communities_Menu_Widget extends WP_Widget {
                 'type' => 'select',
                 'label' => 'Menu Layout',
                 'options' => array( 
-                    'standard' => 'List (default)',
+                    'list' => 'List (default)',
                     'grid' => 'Grid',
                     'subnav' => 'Sub-Navigation'
                 )
