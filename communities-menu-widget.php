@@ -524,7 +524,7 @@ class Walker_Nav_Menu_Image extends Walker {
 
         $item_output = $args->before;
         $item_output .= '<a'. $attributes .'>';
-        $item_output .= sprintf('<span class="icon"><img src="%s" /></span>', $item->image);
+        $item_output .= (!empty($item->image)) ? sprintf('<span class="icon"><img src="%s" /></span>', $item->image) : "";
         $item_output .= $args->link_before . apply_filters( 'the_title', $item->title, $item->ID ) . $args->link_after;
         $item_output .= '</a>';
         $item_output .= $args->after;
