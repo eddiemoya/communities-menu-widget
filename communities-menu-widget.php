@@ -224,9 +224,9 @@ class Communities_Menu_Widget extends WP_Widget {
         <p>
         	<label for="<?php echo $this->get_field_id('menu_layout'); ?>"><?php _e('Menu Layout:'); ?></label>
         	<select id="<?php echo $this->get_field_id('menu_layout'); ?>" name="<?php echo $this->get_field_name('menu_layout'); ?>">
-        		<option value="standard">List (default)</option>
-        		<option value="grid">Grid</option>
-        		<option value="subnav">Sub-Navigation</option>
+        		<option value="standard"<?php if($instance['menu_layout'] == 'standard' ) echo ' selected="selected"';?>>List (default)</option>
+        		<option value="grid"<?php if($instance['menu_layout'] == 'grid' ) echo ' selected="selected"';?>>Grid</option>
+        		<option value="subnav"<?php if($instance['menu_layout'] == 'subnav' ) echo ' selected="selected"';?>>Sub-Navigation</option>
         	</select>
         </p>
         <p>
