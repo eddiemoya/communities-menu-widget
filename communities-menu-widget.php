@@ -103,7 +103,7 @@ class Communities_Menu_Widget extends WP_Widget {
 		echo '<section class="content-body clearfix">';
 
 		wp_nav_menu( array( 
-			'container_class'      => 'subnav-items', 
+			'container_class'      => 'subnav-items image-' . $instance['menu_layout'] . '-style',
 			'fallback_cb' => '', 
 			'menu' => $nav_menu,
 			'walker' => new Walker_Nav_Menu_Image()
@@ -221,6 +221,14 @@ class Communities_Menu_Widget extends WP_Widget {
         $this->form_field('title', 'text', 'Title', $instance);
         $this->form_field('sub-title', 'text', 'Sub Title', $instance);
         ?>
+        <p>
+        	<label for="<?php echo $this->get_field_id('menu_layout'); ?>"><?php _e('Menu Layout:'); ?></label>
+        	<select id="<?php echo $this->get_field_id('menu_layout'); ?>" name="<?php echo $this->get_field_name('menu_layout'); ?>">
+        		<option value="standard">List (default)</option>
+        		<option value="grid">Grid</option>
+        		<option value="subnav">Sub-Navigation</option>
+        	</select>
+        </p>
         <p>
 			<label for="<?php echo $this->get_field_id('nav_menu'); ?>"><?php _e('Select Menu:'); ?></label>
 			<select id="<?php echo $this->get_field_id('nav_menu'); ?>" name="<?php echo $this->get_field_name('nav_menu'); ?>">
